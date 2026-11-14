@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Standalone Daynest brand mark for in-app use (onboarding, splash, about screen). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#D98B6E"
+        android:pathData="M54,40m-14,0a14,14 0,1 1,28 0a14,14 0,1 1,-28 0" />
+    <path
+        android:fillColor="#3F6A5E"
+        android:pathData="M30.53,53 A24,24 0 1 0 77.47,53 A24,24 0 0 1 30.53,53 Z" />
+</vector>

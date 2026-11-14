@@ -1,0 +1,12 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Plain, dependency-free theme: Compose draws all real UI via DaynestTheme
+         (see ui/theme/Theme.kt). No splash-screen library involved, so nothing
+         here depends on an external AAR's own resources resolving correctly
+         against compileSdk. -->
+    <style name="Theme.Daynest" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:windowBackground">@color/nest_cream</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+    </style>
+</resources>

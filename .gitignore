@@ -1,0 +1,36 @@
+# Build outputs
+*.iml
+.gradle/
+/build/
+/app/build/
+/app/release/
+app/schemas/
+.cxx/
+.externalNativeBuild/
+captures/
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Local machine / IDE config — never commit these, they're machine-specific
+/local.properties
+local.properties
+.idea/
+*.hprof
+.navigation/
+captures/
+.DS_Store
+
+# Signing credentials — never commit keystores or passwords
+*.jks
+*.keystore
+key.properties
+keystore.properties
+
+# Kotlin / KSP
+.kotlin/
+
+# macOS / misc
+.DS_Store
+Thumbs.db

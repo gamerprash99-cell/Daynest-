@@ -39,8 +39,18 @@ jobs:
       # and installs the exact Android SDK platform + build-tools the
       # project needs, accepting the SDK licenses automatically so the
       # build never stalls waiting for interactive confirmation.
+      #
+      # NOTE: android-actions/setup-android@v3's default package list was
+      # "tools platform-tools", but the "tools" package no longer exists in
+      # the Android SDK repository, so sdkmanager fails with exit code 1.
+      # v4+ defaults to "platform-tools" and skips the deprecated "tools"
+      # package. We also explicitly install platform;android-36 (compileSdk)
+      # and build-tools so AGP has everything it needs to compile resources.
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
+        with:
+          packages: 'platforms;android-36 build-tools;35.0.0 platform-tools'
+          accept-android-sdk-licenses: true
 
       # Caches the Gradle wrapper distribution and dependency downloads
       # between runs, and validates the wrapper's checksum for security.

@@ -116,7 +116,7 @@ fun HomeScreen(
                     title = "Tasks Today",
                     value = "${state.todaysTasks.count { !it.isDone }}",
                     subtitle = "${state.overdueCount} overdue",
-                    icon = CheckCircle,
+                    icon = Icons.Filled.CheckCircle,
                     iconColor = NestLavender,
                     onClick = onOpenPlanner,
                     modifier = Modifier.weight(1f)
@@ -125,7 +125,7 @@ fun HomeScreen(
                     title = "Habits Done",
                     value = "${state.habitsDoneToday}",
                     subtitle = "of ${state.totalHabits} today",
-                    icon = Spa,
+                    icon = Icons.Filled.Spa,
                     iconColor = com.daynest.ui.theme.NestSageGreen,
                     onClick = onOpenHabits,
                     modifier = Modifier.weight(1f)
@@ -134,7 +134,7 @@ fun HomeScreen(
                     title = "Spending",
                     value = "₹${state.todaysExpense}",
                     subtitle = "Today",
-                    icon = AttachMoney,
+                    icon = Icons.Filled.AttachMoney,
                     iconColor = com.daynest.ui.theme.NestBlushPink,
                     onClick = onOpenExpenses,
                     modifier = Modifier.weight(1f)
@@ -205,28 +205,28 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.spacedBy(spacing.sm)
             ) {
                 PremiumQuickAction(
-                    icon = Edit,
+                    icon = Icons.Filled.Edit,
                     label = "Write Entry",
                     color = com.daynest.ui.theme.NestLavender,
                     onClick = onOpenJournal,
                     modifier = Modifier.weight(1f)
                 )
                 PremiumQuickAction(
-                    icon = Add,
+                    icon = Icons.Filled.Add,
                     label = "Add Task",
                     color = com.daynest.ui.theme.NestPowderBlue,
                     onClick = onOpenPlanner,
                     modifier = Modifier.weight(1f)
                 )
                 PremiumQuickAction(
-                    icon = Add,
+                    icon = Icons.Filled.Add,
                     label = "Habit",
                     color = com.daynest.ui.theme.NestSageGreen,
                     onClick = onOpenHabits,
                     modifier = Modifier.weight(1f)
                 )
                 PremiumQuickAction(
-                    icon = Add,
+                    icon = Icons.Filled.Add,
                     label = "Expense",
                     color = com.daynest.ui.theme.NestBlushPink,
                     onClick = onOpenExpenses,
@@ -252,7 +252,7 @@ fun HomeScreen(
         if (state.todaysTasks.isEmpty()) {
             item {
                 PremiumEmptyState(
-                    icon = EventNote,
+                    icon = Icons.Filled.EventNote,
                     title = "Nothing scheduled today",
                     message = "Add a task to get your day moving.",
                     actionLabel = "Open Planner",
@@ -372,7 +372,7 @@ private fun PremiumHomeJournalRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             androidx.compose.material3.Icon(
-                imageVector = Book,
+                imageVector = Icons.Filled.Book,
                 contentDescription = "Journal",
                 tint = com.daynest.ui.theme.NestLavender,
                 modifier = Modifier.size(24.dp)

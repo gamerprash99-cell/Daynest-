@@ -28,7 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.AssistChip
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -76,7 +76,7 @@ fun HabitsScreen() {
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 shape = com.daynest.ui.theme.full
             ) {
-                Icon(Add, contentDescription = "Add Habit")
+                Icon(Icons.Filled.Add, contentDescription = "Add Habit")
             }
         }
     ) { padding ->
@@ -100,7 +100,7 @@ fun HabitsScreen() {
                     title = "Active Habits",
                     value = "${state.habits.size}",
                     subtitle = "Keep it going",
-                    icon = Spa,
+                    icon = Icons.Filled.Spa,
                     iconColor = NestSageGreen,
                     modifier = Modifier.weight(1f)
                 )
@@ -108,7 +108,7 @@ fun HabitsScreen() {
                     title = "Today's Streak",
                     value = "${state.habits.count { it.doneToday }}",
                     subtitle = "habits done",
-                    icon = CheckCircle,
+                    icon = Icons.Filled.CheckCircle,
                     iconColor = NestLavender,
                     modifier = Modifier.weight(1f)
                 )
@@ -116,7 +116,7 @@ fun HabitsScreen() {
                     title = "Best Streak",
                     value = "${state.habits.maxOfOrNull { it.currentStreak } ?: 0}",
                     subtitle = "days",
-                    icon = Fireplace,
+                    icon = Icons.Filled.Fireplace,
                     iconColor = com.daynest.ui.theme.NestMutedPeach,
                     modifier = Modifier.weight(1f)
                 )
@@ -146,7 +146,7 @@ fun HabitsScreen() {
                 HabitTab.Cards -> {
                     if (state.habits.isEmpty()) {
                         PremiumEmptyState(
-                            icon = Spa,
+                            icon = Icons.Filled.Spa,
                             title = "No habits yet",
                             message = "Add one small habit you want to build.",
                             actionLabel = "Add Habit",
@@ -269,7 +269,7 @@ private fun PremiumHabitCard(
                 ) {
                     if (currentStreak > 0) {
                         androidx.compose.material3.Icon(
-                            imageVector = Fireplace,
+                            imageVector = Icons.Filled.Fireplace,
                             contentDescription = "Streak",
                             tint = com.daynest.ui.theme.NestMutedPeach,
                             modifier = Modifier.size(16.dp)
@@ -295,7 +295,7 @@ private fun PremiumHabitCard(
             ) {
                 IconButton(onClick = onToggle) {
                     Icon(
-                        imageVector = if (doneToday) CheckCircle else Circle,
+                        imageVector = if (doneToday) Icons.Filled.CheckCircle else Icons.Outlined.Circle,
                         contentDescription = if (doneToday) "Done today" else "Mark done today",
                         tint = if (doneToday) com.daynest.ui.theme.NestSageGreen
                         else MaterialTheme.colorScheme.outline
@@ -354,7 +354,7 @@ private fun AddEditHabitSheet(
                 horizontalArrangement = Arrangement.spacedBy(spacing.xs)
             ) {
                 listOf("\u2728", "\uD83D\ude42", "\uD83D\ude04", "\uD83D\udc38", "\uD83D\udc41", "\uD83E\udd9c").forEach { e ->
-                    AssistChip(
+                    FilterChip(
                         selected = emoji == e,
                         onClick = { emoji = e },
                         label = { Text(e) }
@@ -370,7 +370,7 @@ private fun AddEditHabitSheet(
                 horizontalArrangement = Arrangement.spacedBy(spacing.xs)
             ) {
                 listOf("#3F6A5E", "#BCD4A7", "#C3B1E1", "#F4C2C2", "#A8DADC", "#E3AFA0").forEach { c ->
-                    AssistChip(
+                    FilterChip(
                         selected = colorHex == c,
                         onClick = { colorHex = c },
                         label = { Text(c) }

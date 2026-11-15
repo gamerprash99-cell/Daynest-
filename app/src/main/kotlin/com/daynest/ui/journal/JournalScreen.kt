@@ -28,8 +28,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButtonDefaults
-import androidx.compose.material3.ChipDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -77,7 +75,7 @@ fun JournalScreen(onOpenCalendar: () -> Unit = {}) {
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 shape = com.daynest.ui.theme.full
             ) {
-                Icon(Add, contentDescription = "New Entry")
+                Icon(Icons.Filled.Add, contentDescription = "New Entry")
             }
         }
     ) { padding ->
@@ -113,21 +111,13 @@ fun JournalScreen(onOpenCalendar: () -> Unit = {}) {
                     androidx.compose.material3.FilterChip(
                         selected = isSelected,
                         onClick = { selectedDate = date },
-                        label = { Text(label) },
-                        colors = androidx.compose.material3.ChipDefaults.colors(
-                            containerColor = if (isSelected) NestLavender else Color.Transparent,
-                            borderColor = if (isSelected) NestLavender else MaterialTheme.colorScheme.outlineVariant
-                        )
+                        label = { Text(label) }
                     )
                 }
                 androidx.compose.material3.FilterChip(
                     selected = selectedDate == null,
                     onClick = { selectedDate = null },
-                    label = { Text("All") },
-                    colors = androidx.compose.material3.ChipDefaults.colors(
-                        containerColor = if (selectedDate == null) NestLavender else Color.Transparent,
-                        borderColor = if (selectedDate == null) NestLavender else MaterialTheme.colorScheme.outlineVariant
-                    )
+                    label = { Text("All") }
                 )
             }
 
@@ -144,7 +134,7 @@ fun JournalScreen(onOpenCalendar: () -> Unit = {}) {
 
             if (entriesToShow.isEmpty()) {
                 PremiumEmptyState(
-                    icon = Book,
+                    icon = Icons.Filled.Book,
                     title = if (selectedDate != null) "No entries on this date" else "Your journal is empty",
                     message = if (selectedDate != null) "Write your first entry for this day." else "Write your first entry whenever you're ready.",
                     actionLabel = "Write Entry",
@@ -303,10 +293,7 @@ private fun AddEditJournalSheet(
                 horizontalArrangement = Arrangement.spacedBy(spacing.sm)
             ) {
                 androidx.compose.material3.TextButton(
-                    onClick = { onDismiss() },
-                    colors = androidx.compose.material3.TextButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    onClick = { onDismiss() }
                 ) {
                     Text(text = "Cancel")
                 }

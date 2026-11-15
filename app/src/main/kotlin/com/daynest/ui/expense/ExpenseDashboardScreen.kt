@@ -13,18 +13,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AttachMoney
-import androidx.compose.material.icons.filled.ArrowDownward
-import androidx.compose.material.icons.filled.ArrowUpward
-import androidx.compose.material.icons.filled.AccountBalanceWallet
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.Icons
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -89,7 +83,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
                 title = "Income",
                 value = formatCurrency(state.totalIncome),
                 subtitle = "This month",
-                icon = ArrowUpward,
+                icon = Icons.Filled.ArrowUpward,
                 iconColor = NestSageGreen,
                 modifier = Modifier.weight(1f)
             )
@@ -97,7 +91,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
                 title = "Expenses",
                 value = formatCurrency(state.totalExpense),
                 subtitle = "This month",
-                icon = ArrowDownward,
+                icon = Icons.Filled.ArrowDownward,
                 iconColor = NestBlushPink,
                 modifier = Modifier.weight(1f)
             )
@@ -105,7 +99,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
                 title = "Savings",
                 value = formatCurrency(state.totalIncome - state.totalExpense),
                 subtitle = "Remaining budget",
-                icon = AccountBalanceWallet,
+                icon = Icons.Filled.AccountBalanceWallet,
                 iconColor = NestLavender,
                 modifier = Modifier.weight(1f)
             )
@@ -118,10 +112,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
             title = "Recent Transactions",
             trailing = {
                 androidx.compose.material3.TextButton(
-                    onClick = { /* view all */ },
-                    colors = androidx.compose.material3.TextButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.primary
-                    )
+                    onClick = { /* view all */ }
                 ) {
                     Text(text = "See all")
                 }
@@ -130,7 +121,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
 
         if (state.expenses.isEmpty()) {
             PremiumEmptyState(
-                icon = AttachMoney,
+                icon = Icons.Filled.AttachMoney,
                 title = "No transactions yet",
                 message = "Add your first expense or income.",
                 actionLabel = "Add Transaction",
@@ -160,7 +151,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
         contentColor = MaterialTheme.colorScheme.onPrimary,
         shape = com.daynest.ui.theme.full
     ) {
-        Icon(Add, contentDescription = "Add Expense")
+        Icon(Icons.Filled.Add, contentDescription = "Add Expense")
     }
 }
 

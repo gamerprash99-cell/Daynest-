@@ -115,7 +115,7 @@ fun JournalEditorScreen(entryId: Long? = null, onBack: () -> Unit = {}) {
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 IconButton(onClick = onBack) {
-                    Icon(ArrowBack, contentDescription = "Close")
+                    Icon(Icons.Filled.ArrowBack, contentDescription = "Close")
                 }
             }
             Spacer(modifier = Modifier.height(spacing.md))
@@ -125,7 +125,7 @@ fun JournalEditorScreen(entryId: Long? = null, onBack: () -> Unit = {}) {
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(CalendarMonth, contentDescription = "Date")
+                Icon(Icons.Filled.CalendarMonth, contentDescription = "Date")
                 Spacer(modifier = Modifier.width(spacing.sm))
                 Text(
                     text = selectedDate.format(java.time.format.DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy")),
@@ -173,22 +173,22 @@ fun JournalEditorScreen(entryId: Long? = null, onBack: () -> Unit = {}) {
                 horizontalArrangement = Arrangement.spacedBy(spacing.sm)
             ) {
                 PremiumMediaOption(
-                    icon = InsertPhoto,
+                    icon = Icons.Filled.InsertPhoto,
                     label = "Photo",
                     onClick = { /* Open gallery */ }
                 )
                 PremiumMediaOption(
-                    icon = Mic,
+                    icon = Icons.Filled.Mic,
                     label = "Voice",
                     onClick = { /* Record voice */ }
                 )
                 PremiumMediaOption(
-                    icon = InsertEmoticon,
+                    icon = Icons.Filled.InsertEmoticon,
                     label = "Stickers",
                     onClick = { showStickers = true }
                 )
                 PremiumMediaOption(
-                    icon = Edit,
+                    icon = Icons.Filled.Edit,
                     label = "Draw",
                     onClick = { showDrawing = true }
                 )

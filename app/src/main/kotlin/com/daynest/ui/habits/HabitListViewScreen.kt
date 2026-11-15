@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Spa
-import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -142,7 +142,7 @@ private fun HabitListRow(
         ) {
             // Habit color indicator
             androidx.compose.foundation.layout.Box(
-                modifier = Modifier.size(8.dp).background(habitColor).shape(com.daynest.ui.theme.full)
+                modifier = Modifier.size(8.dp).background(habitColor, shape = com.daynest.ui.theme.full)
             )
             Spacer(modifier = Modifier.width(spacing.sm))
             Column(Modifier.weight(1f)) {
@@ -172,7 +172,7 @@ private fun HabitListRow(
                 )
                 IconButton(onClick = onToggle) {
                     Icon(
-                        imageVector = if (habitRow.doneToday) Icons.Default.CheckCircle else Circle,
+                        imageVector = if (habitRow.doneToday) Icons.Default.CheckCircle else Icons.Outlined.Circle,
                         contentDescription = if (habitRow.doneToday) "Done today" else "Mark done today",
                         tint = if (habitRow.doneToday) NestSageGreen else MaterialTheme.colorScheme.outline
                     )

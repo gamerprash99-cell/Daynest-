@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
@@ -52,7 +54,7 @@ fun HabitHeatmapScreen(
     onHabitClick: (HabitEntity) -> Unit
 ) {
     val spacing = LocalDaynestSpacing.current
-    var selectedHabit by remember { mutableStateOf<HabitEntity?>(null) }
+    var selectedHabit by remember { mutableStateOf<HabitRow?>(null) }
     var currentMonth by remember { mutableStateOf(YearMonth.now()) }
 
     val habitToShow = selectedHabit ?: habits.firstOrNull() ?: return
@@ -98,7 +100,7 @@ fun HabitHeatmapScreen(
                 color = MaterialTheme.colorScheme.onSurface
             )
             IconButton(onClick = { currentMonth = currentMonth.plusMonths(1) }) {
-                Icon(Icons.Default.ArrowForward, contentDescription = "Next month")
+                Icon(Icons.Filled.ArrowForward, contentDescription = "Next month")
             }
         }
         Spacer(modifier = Modifier.height(spacing.md))
@@ -175,7 +177,7 @@ fun HabitHeatmapScreen(
                 title = "Current Streak",
                 value = "${habitToShow.currentStreak}",
                 subtitle = "days",
-                icon = Fireplace,
+                icon = Icons.Filled.Fireplace,
                 iconColor = com.daynest.ui.theme.NestMutedPeach,
                 modifier = Modifier.weight(1f)
             )
@@ -183,7 +185,7 @@ fun HabitHeatmapScreen(
                 title = "Total Completions",
                 value = "${habitToShow.completions.size}",
                 subtitle = "this month",
-                icon = CheckCircle,
+                icon = Icons.Filled.CheckCircle,
                 iconColor = NestLavender,
                 modifier = Modifier.weight(1f)
             )
@@ -198,7 +200,7 @@ private fun HeatmapLegendItem(color: Color, label: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         androidx.compose.foundation.layout.Box(
-            modifier = Modifier.size(12.dp).background(color).shape(com.daynest.ui.theme.full)
+            modifier = Modifier.size(12.dp).background(color, shape = com.daynest.ui.theme.full)
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(

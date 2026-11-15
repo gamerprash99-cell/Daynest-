@@ -26,7 +26,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButtonDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -145,10 +144,7 @@ fun ExpenseGroupsScreen(onOpenGroup: (Long) -> Unit = {}) {
                     onClick = {
                         newGroupName = ""
                         showAddGroupSheet = false
-                    },
-                    colors = androidx.compose.material3.TextButtonDefaults.textButtonColors(
-                        contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
+                    }
                 ) {
                     Text(text = "Cancel")
                 }

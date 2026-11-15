@@ -180,9 +180,9 @@ fun HabitsScreen() {
                 HabitTab.List -> {
                     HabitListViewScreen(
                         habits = state.habits,
-                        onToggle = { viewModel.toggleToday(it.habit.id) },
+                        onToggle = { viewModel.toggleToday(it) },
                         onClick = { editingHabit = it.habit; showSheet = true },
-                        onDelete = { viewModel.delete(it.habit) }
+                        onDelete = { viewModel.delete(it) }
                     )
                 }
             }

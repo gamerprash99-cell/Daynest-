@@ -480,47 +480,9 @@ private fun DrawingCanvas(
     brushColor: androidx.compose.ui.graphics.Color,
     brushSize: Float
 ) {
-    var currentPath by remember { mutableStateOf(mutableListOf<DrawingPoint>()) }
-    val density = androidx.compose.ui.platform.LocalDensity.current
-
     androidx.compose.foundation.Canvas(
-        modifier = Modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-                detectDragGestures(
-                    onDragStart = { offset ->
-                        currentPath = mutableListOf(
-                            DrawingPoint(
-                                x = offset.x,
-                                y = offset.y,
-                                color = brushColor,
-                                size = brushSize
-                            )
-                        )
-                    },
-                    onDragEnd = {
-                        if (currentPath.isNotEmpty()) {
-                            onPathAdded(DrawingPath(currentPath.toList()))
-                        }
-                        currentPath = mutableListOf()
-                    },
-                    onDragCancel = {
-                        currentPath = mutableListOf()
-                    },
-                    onDrag = { change, dragAmount ->
-                        change.consumePositionChange()
-                        val newPoint = DrawingPoint(
-                            x = change.position.x,
-                            y = change.position.y,
-                            color = brushColor,
-                            size = brushSize
-                        )
-                        currentPath.add(newPoint)
-                    }
-                )
-            }
+        modifier = Modifier.fillMaxSize()
     ) {
-        // Draw existing paths
         paths.forEach { path ->
             for (i in path.points.indices.drop(1)) {
                 val p1 = path.points[i - 1]
@@ -532,18 +494,6 @@ private fun DrawingCanvas(
                     strokeWidth = p1.size
                 )
             }
-        }
-
-        // Draw current path being drawn
-        for (i in currentPath.indices.drop(1)) {
-            val p1 = currentPath[i - 1]
-            val p2 = currentPath[i]
-            drawLine(
-                color = p1.color,
-                start = androidx.compose.ui.geometry.Offset(p1.x, p1.y),
-                end = androidx.compose.ui.geometry.Offset(p2.x, p2.y),
-                strokeWidth = p1.size
-            )
         }
     }
 }

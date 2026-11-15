@@ -43,9 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.input.pointer.detectDragGestures
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawLine
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.daynest.data.local.journal.JournalEntryEntity
 import com.daynest.data.local.journal.Mood
@@ -523,9 +521,9 @@ private fun DrawingCanvas(
     ) {
         // Draw existing paths
         paths.forEach { path ->
-            for (i in path.indices.drop(1)) {
-                val p1 = path[i - 1]
-                val p2 = path[i]
+            for (i in path.points.indices.drop(1)) {
+                val p1 = path.points[i - 1]
+                val p2 = path.points[i]
                 drawLine(
                     color = p1.color,
                     start = androidx.compose.ui.geometry.Offset(p1.x, p1.y),

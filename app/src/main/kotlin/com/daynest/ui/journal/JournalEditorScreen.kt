@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
@@ -30,7 +31,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButtonDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -409,9 +409,7 @@ private fun DrawingCanvasSheet(
             Text("Color:", style = MaterialTheme.typography.labelSmall)
             Spacer(modifier = Modifier.width(4.dp))
             androidx.compose.foundation.layout.Box(
-                modifier = Modifier.size(24.dp).clickable(onClick = { showColorPicker = true }),
-                shape = com.daynest.ui.theme.full,
-                background = brushColor
+                modifier = Modifier.size(24.dp).clickable(onClick = { showColorPicker = true }).background(brushColor, shape = com.daynest.ui.theme.full)
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text("Size:", style = MaterialTheme.typography.labelSmall)
@@ -437,10 +435,7 @@ private fun DrawingCanvasSheet(
             horizontalArrangement = Arrangement.spacedBy(spacing.sm)
         ) {
             androidx.compose.material3.TextButton(
-                onClick = { onDismiss() },
-                colors = androidx.compose.material3.TextButtonDefaults.textButtonColors(
-                    contentColor = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                onClick = { onDismiss() }
             ) {
                 Text(text = "Cancel")
             }
@@ -486,7 +481,7 @@ private fun DrawingCanvas(
     brushColor: androidx.compose.ui.graphics.Color,
     brushSize: Float
 ) {
-    var currentPath by remember { mutableStateOf<MutableList<DrawingPoint>>(emptyList().toMutableList()) }
+    var currentPath by remember { mutableStateOf(mutableListOf<DrawingPoint>()) }
     val density = androidx.compose.ui.platform.LocalDensity.current
 
     androidx.compose.ui.graphics.Canvas(
@@ -508,10 +503,10 @@ private fun DrawingCanvas(
                         if (currentPath.isNotEmpty()) {
                             onPathAdded(DrawingPath(currentPath.toList()))
                         }
-                        currentPath = emptyList().toMutableList()
+                        currentPath = mutableListOf()
                     },
                     onDragCancel = {
-                        currentPath = emptyList().toMutableList()
+                        currentPath = mutableListOf()
                     },
                     onDrag = { change, dragAmount ->
                         change.consumePositionChange()

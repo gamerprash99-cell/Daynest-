@@ -68,7 +68,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
                 )
             }
             IconButton(onClick = onOpenSettings) {
-                Icon(Icons.Default.Settings, contentDescription = "Settings")
+                Icon(Icons.Filled.Settings, contentDescription = "Settings")
             }
         }
         Spacer(modifier = Modifier.height(spacing.md))

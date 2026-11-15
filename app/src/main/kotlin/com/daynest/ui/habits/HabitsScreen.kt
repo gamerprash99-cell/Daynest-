@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -245,9 +246,7 @@ private fun PremiumHabitCard(
         ) {
             // Habit icon
             androidx.compose.foundation.layout.Box(
-                modifier = Modifier.size(48.dp),
-                shape = com.daynest.ui.theme.DaynestShapes.medium,
-                background = habitColor.copy(alpha = 0.15f),
+                modifier = Modifier.size(48.dp).background(habitColor.copy(alpha = 0.15f), shape = com.daynest.ui.theme.DaynestShapes.medium),
                 contentAlignment = Alignment.Center
             ) {
                 Text(

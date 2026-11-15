@@ -291,7 +291,9 @@ fun HomeScreen(
             }
         }
 
-        Spacer(modifier = Modifier.height(spacing.xxl))
+        item {
+            Spacer(modifier = Modifier.height(spacing.xxl))
+        }
     }
 }
 

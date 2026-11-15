@@ -194,7 +194,7 @@ fun JournalCalendarScreen(
 
             if (dayEntries.isEmpty()) {
                 PremiumEmptyState(
-                    icon = Book,
+                    icon = Icons.Filled.Book,
                     title = "No entries for this day",
                     message = "Write your first memory for this date.",
                     actionLabel = "Write Entry",
@@ -222,7 +222,7 @@ fun JournalCalendarScreen(
             val recent = state.entries.take(5)
             if (recent.isEmpty()) {
                 PremiumEmptyState(
-                    icon = Book,
+                    icon = Icons.Filled.Book,
                     title = "Your journal is empty",
                     message = "Start writing your first memory.",
                     actionLabel = "Write Entry",

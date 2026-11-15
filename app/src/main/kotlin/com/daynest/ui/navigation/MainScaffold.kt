@@ -44,6 +44,7 @@ import com.daynest.ui.expense.ExpenseDashboardScreen
 import com.daynest.ui.expense.ExpenseGroupsScreen
 import com.daynest.ui.habits.HabitHeatmapScreen
 import com.daynest.ui.habits.HabitListViewScreen
+import com.daynest.data.local.habit.HabitEntity
 import com.daynest.ui.journal.JournalCalendarScreen
 import com.daynest.ui.journal.JournalEditorScreen
 import com.daynest.ui.settings.AboutScreen

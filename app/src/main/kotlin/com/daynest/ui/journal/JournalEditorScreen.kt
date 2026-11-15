@@ -9,10 +9,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.CalendarMonth
+import androidx.compose.material.icons.filled.InsertPhoto
+import androidx.compose.material.icons.filled.Mic
+import androidx.compose.material.icons.filled.InsertEmoticon
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -20,6 +30,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButtonDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,6 +41,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.detectDragGestures
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawLine
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.daynest.data.local.journal.JournalEntryEntity
 import com.daynest.data.local.journal.Mood
@@ -39,6 +55,7 @@ import com.daynest.ui.components.PremiumMoodPicker
 import com.daynest.ui.components.PremiumSectionHeader
 import com.daynest.ui.theme.LocalDaynestSpacing
 import com.daynest.ui.theme.NestLavender
+import java.time.LocalDate
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -98,7 +115,7 @@ fun JournalEditorScreen(entryId: Long? = null, onBack: () -> Unit = {}) {
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 IconButton(onClick = onBack) {
-                    Icon(Icons.Default.ArrowBack, contentDescription = "Close")
+                    Icon(ArrowBack, contentDescription = "Close")
                 }
             }
             Spacer(modifier = Modifier.height(spacing.md))
@@ -108,7 +125,7 @@ fun JournalEditorScreen(entryId: Long? = null, onBack: () -> Unit = {}) {
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(Icons.Default.CalendarMonth, contentDescription = "Date")
+                Icon(CalendarMonth, contentDescription = "Date")
                 Spacer(modifier = Modifier.width(spacing.sm))
                 Text(
                     text = selectedDate.format(java.time.format.DateTimeFormatter.ofPattern("EEEE, MMM d, yyyy")),
@@ -156,22 +173,22 @@ fun JournalEditorScreen(entryId: Long? = null, onBack: () -> Unit = {}) {
                 horizontalArrangement = Arrangement.spacedBy(spacing.sm)
             ) {
                 PremiumMediaOption(
-                    icon = Icons.Default.InsertPhoto,
+                    icon = InsertPhoto,
                     label = "Photo",
                     onClick = { /* Open gallery */ }
                 )
                 PremiumMediaOption(
-                    icon = Icons.Default.Mic,
+                    icon = Mic,
                     label = "Voice",
                     onClick = { /* Record voice */ }
                 )
                 PremiumMediaOption(
-                    icon = Icons.Default.InsertEmoticon,
+                    icon = InsertEmoticon,
                     label = "Stickers",
                     onClick = { showStickers = true }
                 )
                 PremiumMediaOption(
-                    icon = Icons.Default.Edit,
+                    icon = Edit,
                     label = "Draw",
                     onClick = { showDrawing = true }
                 )

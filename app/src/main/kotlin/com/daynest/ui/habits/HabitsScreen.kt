@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -16,6 +18,9 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Spa
+import androidx.compose.material.icons.filled.Fireplace
+import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,6 +28,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -34,6 +40,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.daynest.data.local.habit.HabitEntity
 import com.daynest.ui.LocalViewModelFactory
@@ -69,7 +76,7 @@ fun HabitsScreen() {
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 shape = com.daynest.ui.theme.full
             ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Habit")
+                Icon(Add, contentDescription = "Add Habit")
             }
         }
     ) { padding ->
@@ -93,7 +100,7 @@ fun HabitsScreen() {
                     title = "Active Habits",
                     value = "${state.habits.size}",
                     subtitle = "Keep it going",
-                    icon = Icons.Default.Spa,
+                    icon = Spa,
                     iconColor = NestSageGreen,
                     modifier = Modifier.weight(1f)
                 )
@@ -101,7 +108,7 @@ fun HabitsScreen() {
                     title = "Today's Streak",
                     value = "${state.habits.count { it.doneToday }}",
                     subtitle = "habits done",
-                    icon = Icons.Default.CheckCircle,
+                    icon = CheckCircle,
                     iconColor = NestLavender,
                     modifier = Modifier.weight(1f)
                 )
@@ -109,7 +116,7 @@ fun HabitsScreen() {
                     title = "Best Streak",
                     value = "${state.habits.maxOfOrNull { it.currentStreak } ?: 0}",
                     subtitle = "days",
-                    icon = Icons.Default.Fireplace,
+                    icon = Fireplace,
                     iconColor = com.daynest.ui.theme.NestMutedPeach,
                     modifier = Modifier.weight(1f)
                 )
@@ -139,7 +146,7 @@ fun HabitsScreen() {
                 HabitTab.Cards -> {
                     if (state.habits.isEmpty()) {
                         PremiumEmptyState(
-                            icon = Icons.Default.Spa,
+                            icon = Spa,
                             title = "No habits yet",
                             message = "Add one small habit you want to build.",
                             actionLabel = "Add Habit",
@@ -262,7 +269,7 @@ private fun PremiumHabitCard(
                 ) {
                     if (currentStreak > 0) {
                         androidx.compose.material3.Icon(
-                            imageVector = Icons.Default.Fireplace,
+                            imageVector = Fireplace,
                             contentDescription = "Streak",
                             tint = com.daynest.ui.theme.NestMutedPeach,
                             modifier = Modifier.size(16.dp)
@@ -284,11 +291,11 @@ private fun PremiumHabitCard(
             Spacer(modifier = Modifier.width(1.dp))
             Column(
                 horizontalAlignment = Alignment.End,
-                verticalAlignment = Alignment.CenterVertically
+                verticalArrangement = Arrangement.Center
             ) {
                 IconButton(onClick = onToggle) {
                     Icon(
-                        imageVector = if (doneToday) Icons.Default.CheckCircle else Icons.Outlined.Circle,
+                        imageVector = if (doneToday) CheckCircle else Circle,
                         contentDescription = if (doneToday) "Done today" else "Mark done today",
                         tint = if (doneToday) com.daynest.ui.theme.NestSageGreen
                         else MaterialTheme.colorScheme.outline
@@ -298,6 +305,96 @@ private fun PremiumHabitCard(
                     Icon(Icons.Default.Delete, contentDescription = "Delete habit")
                 }
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun AddEditHabitSheet(
+    existing: HabitEntity?,
+    onDismiss: () -> Unit,
+    onSave: (name: String, emoji: String, color: String) -> Unit
+) {
+    val spacing = LocalDaynestSpacing.current
+    val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    var name by remember { mutableStateOf(existing?.name ?: "") }
+    var emoji by remember { mutableStateOf(existing?.emoji ?: "\u2728") }
+    var colorHex by remember { mutableStateOf(existing?.colorHex ?: "#3F6A5E") }
+
+    ModalBottomSheet(
+        onDismissRequest = onDismiss,
+        sheetState = sheetState,
+        containerColor = MaterialTheme.colorScheme.surfaceContainerLowest
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = spacing.md, vertical = spacing.lg)
+        ) {
+            Text(
+                text = if (existing == null) "New Habit" else "Edit Habit",
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Spacer(modifier = Modifier.height(spacing.lg))
+
+            PremiumTextField(
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Habit name") },
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(spacing.md))
+
+            Text("Emoji", style = MaterialTheme.typography.titleSmall)
+            Spacer(modifier = Modifier.height(spacing.xs))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(spacing.xs)
+            ) {
+                listOf("\u2728", "\uD83D\ude42", "\uD83D\ude04", "\uD83D\udc38", "\uD83D\udc41", "\uD83E\udd9c").forEach { e ->
+                    AssistChip(
+                        selected = emoji == e,
+                        onClick = { emoji = e },
+                        label = { Text(e) }
+                    )
+                }
+            }
+            Spacer(modifier = Modifier.height(spacing.md))
+
+            Text("Color", style = MaterialTheme.typography.titleSmall)
+            Spacer(modifier = Modifier.height(spacing.xs))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(spacing.xs)
+            ) {
+                listOf("#3F6A5E", "#BCD4A7", "#C3B1E1", "#F4C2C2", "#A8DADC", "#E3AFA0").forEach { c ->
+                    AssistChip(
+                        selected = colorHex == c,
+                        onClick = { colorHex = c },
+                        label = { Text(c) }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(spacing.lg))
+            androidx.compose.material3.Button(
+                onClick = {
+                    if (name.isNotBlank()) {
+                        onSave(name.trim(), emoji, colorHex)
+                    }
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = androidx.compose.material3.ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary
+                ),
+                shape = MaterialTheme.shapes.medium
+            ) {
+                Text(text = "Save Habit")
+            }
+            Spacer(modifier = Modifier.height(spacing.lg))
         }
     }
 }

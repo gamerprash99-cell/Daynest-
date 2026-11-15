@@ -8,8 +8,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Fireplace
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -18,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -25,9 +30,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.daynest.data.local.habit.HabitRow
+import com.daynest.data.local.habit.HabitEntity
+import com.daynest.data.local.journal.Mood
 import com.daynest.ui.LocalViewModelFactory
 import com.daynest.ui.components.PremiumSectionHeader
+import com.daynest.ui.components.PremiumSummaryCard
 import com.daynest.ui.theme.LocalDaynestSpacing
 import com.daynest.ui.theme.NestLavender
 import com.daynest.ui.theme.NestOnSurface
@@ -54,7 +61,7 @@ fun HabitHeatmapScreen(
     val yearMonth = currentMonth
     val firstDay = yearMonth.atDay(1)
     val lastDay = yearMonth.atEndOfMonth()
-    val days = firstDay..lastDay
+    val days = (1..lastDay.dayOfMonth).map { firstDay.withDayOfMonth(it) }
     val startOffset = firstDay.dayOfWeek.getValue() - 1
 
     Column(
@@ -123,7 +130,6 @@ fun HabitHeatmapScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 4.dp)
-                        .align(Alignment.CenterHorizontally)
                 )
             }
         }
@@ -169,7 +175,7 @@ fun HabitHeatmapScreen(
                 title = "Current Streak",
                 value = "${habitToShow.currentStreak}",
                 subtitle = "days",
-                icon = Icons.Default.Fireplace,
+                icon = Fireplace,
                 iconColor = com.daynest.ui.theme.NestMutedPeach,
                 modifier = Modifier.weight(1f)
             )
@@ -177,7 +183,7 @@ fun HabitHeatmapScreen(
                 title = "Total Completions",
                 value = "${habitToShow.completions.size}",
                 subtitle = "this month",
-                icon = Icons.Default.CheckCircle,
+                icon = CheckCircle,
                 iconColor = NestLavender,
                 modifier = Modifier.weight(1f)
             )
@@ -192,9 +198,7 @@ private fun HeatmapLegendItem(color: Color, label: String) {
         verticalAlignment = Alignment.CenterVertically
     ) {
         androidx.compose.foundation.layout.Box(
-            modifier = Modifier.size(12.dp),
-            shape = com.daynest.ui.theme.full,
-            background = color
+            modifier = Modifier.size(12.dp).background(color).shape(com.daynest.ui.theme.full)
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(

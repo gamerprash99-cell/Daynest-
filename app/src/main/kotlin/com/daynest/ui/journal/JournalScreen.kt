@@ -11,11 +11,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Book
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,6 +28,8 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButtonDefaults
+import androidx.compose.material3.ChipDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -71,7 +77,7 @@ fun JournalScreen(onOpenCalendar: () -> Unit = {}) {
                 contentColor = MaterialTheme.colorScheme.onPrimary,
                 shape = com.daynest.ui.theme.full
             ) {
-                Icon(Icons.Default.Add, contentDescription = "New Entry")
+                Icon(Add, contentDescription = "New Entry")
             }
         }
     ) { padding ->
@@ -138,7 +144,7 @@ fun JournalScreen(onOpenCalendar: () -> Unit = {}) {
 
             if (entriesToShow.isEmpty()) {
                 PremiumEmptyState(
-                    icon = Icons.Default.Book,
+                    icon = Book,
                     title = if (selectedDate != null) "No entries on this date" else "Your journal is empty",
                     message = if (selectedDate != null) "Write your first entry for this day." else "Write your first entry whenever you're ready.",
                     actionLabel = "Write Entry",
@@ -177,7 +183,7 @@ fun JournalScreen(onOpenCalendar: () -> Unit = {}) {
 }
 
 @Composable
-private fun JournalRow(
+fun JournalRow(
     entry: JournalEntryEntity,
     onClick: () -> Unit,
     onDelete: () -> Unit
@@ -231,6 +237,7 @@ private fun AddEditJournalSheet(
     onSave: (Mood, String, LocalDate?) -> Unit
 ) {
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
+    val spacing = LocalDaynestSpacing.current
     var mood by remember { mutableStateOf(existing?.mood ?: Mood.OKAY) }
     var text by remember { mutableStateOf(existing?.text ?: "") }
     var selectedDate by remember { mutableStateOf(

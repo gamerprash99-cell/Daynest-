@@ -9,11 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Spa
+import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,7 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.daynest.data.local.habit.HabitRow
+import com.daynest.data.local.habit.HabitEntity
 import com.daynest.ui.LocalViewModelFactory
 import com.daynest.ui.components.*
 import com.daynest.ui.components.PremiumEmptyState
@@ -138,9 +142,7 @@ private fun HabitListRow(
         ) {
             // Habit color indicator
             androidx.compose.foundation.layout.Box(
-                modifier = Modifier.size(8.dp),
-                shape = com.daynest.ui.theme.full,
-                background = habitColor
+                modifier = Modifier.size(8.dp).background(habitColor).shape(com.daynest.ui.theme.full)
             )
             Spacer(modifier = Modifier.width(spacing.sm))
             Column(Modifier.weight(1f)) {
@@ -158,7 +160,7 @@ private fun HabitListRow(
             Spacer(modifier = Modifier.width(1.dp))
             Column(
                 horizontalAlignment = Alignment.End,
-                verticalAlignment = Alignment.CenterVertically
+                verticalArrangement = Arrangement.Center
             ) {
                 Text(
                     text = "${habitRow.currentStreak}d",
@@ -170,7 +172,7 @@ private fun HabitListRow(
                 )
                 IconButton(onClick = onToggle) {
                     Icon(
-                        imageVector = if (habitRow.doneToday) Icons.Default.CheckCircle else Icons.Outlined.Circle,
+                        imageVector = if (habitRow.doneToday) Icons.Default.CheckCircle else Circle,
                         contentDescription = if (habitRow.doneToday) "Done today" else "Mark done today",
                         tint = if (habitRow.doneToday) NestSageGreen else MaterialTheme.colorScheme.outline
                     )

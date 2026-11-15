@@ -11,21 +11,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AttachMoney
+import androidx.compose.material.icons.filled.ArrowDownward
+import androidx.compose.material.icons.filled.ArrowUpward
+import androidx.compose.material.icons.filled.AccountBalanceWallet
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.daynest.data.local.expense.ExpenseEntity
 import com.daynest.ui.LocalViewModelFactory
@@ -83,7 +89,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
                 title = "Income",
                 value = formatCurrency(state.totalIncome),
                 subtitle = "This month",
-                icon = Icons.Default.ArrowUpward,
+                icon = ArrowUpward,
                 iconColor = NestSageGreen,
                 modifier = Modifier.weight(1f)
             )
@@ -91,7 +97,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
                 title = "Expenses",
                 value = formatCurrency(state.totalExpense),
                 subtitle = "This month",
-                icon = Icons.Default.ArrowDownward,
+                icon = ArrowDownward,
                 iconColor = NestBlushPink,
                 modifier = Modifier.weight(1f)
             )
@@ -99,7 +105,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
                 title = "Savings",
                 value = formatCurrency(state.totalIncome - state.totalExpense),
                 subtitle = "Remaining budget",
-                icon = Icons.Default.AccountBalanceWallet,
+                icon = AccountBalanceWallet,
                 iconColor = NestLavender,
                 modifier = Modifier.weight(1f)
             )
@@ -124,7 +130,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
 
         if (state.expenses.isEmpty()) {
             PremiumEmptyState(
-                icon = Icons.Default.AttachMoney,
+                icon = AttachMoney,
                 title = "No transactions yet",
                 message = "Add your first expense or income.",
                 actionLabel = "Add Transaction",
@@ -154,7 +160,7 @@ fun ExpenseDashboardScreen(onAddExpense: () -> Unit = {}, onOpenSettings: () -> 
         contentColor = MaterialTheme.colorScheme.onPrimary,
         shape = com.daynest.ui.theme.full
     ) {
-        Icon(Icons.Default.Add, contentDescription = "Add Expense")
+        Icon(Add, contentDescription = "Add Expense")
     }
 }
 
@@ -204,18 +210,24 @@ private fun TransactionRow(
             }
             Column(
                 horizontalAlignment = Alignment.End,
-                verticalAlignment = Alignment.CenterVertically
+                verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = if (isIncome) "+" else "-",
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = color
-                ) +
-                Text(
-                    text = formatCurrency(expense.amountPaise),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = if (isIncome) "+" else "-",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = color
+                    )
+                    Text(
+                        text = formatCurrency(expense.amountPaise),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
             }
         }
     }
@@ -224,5 +236,5 @@ private fun TransactionRow(
 private fun formatCurrency(paise: Long): String {
     val rupees = paise / 100
     val remainingPaise = paise % 100
-    return "₹$rupees.${String.format("%02d", remainingPaise.abs())}"
+    return "₹$rupees.${String.format("%02d", remainingPaise)}"
 }

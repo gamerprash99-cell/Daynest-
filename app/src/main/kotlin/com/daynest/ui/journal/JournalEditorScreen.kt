@@ -482,7 +482,7 @@ private fun DrawingCanvas(
     var currentPath by remember { mutableStateOf(mutableListOf<DrawingPoint>()) }
     val density = androidx.compose.ui.platform.LocalDensity.current
 
-    androidx.compose.ui.graphics.Canvas(
+    androidx.compose.foundation.Canvas(
         modifier = Modifier
             .fillMaxSize()
             .pointerInput(Unit) {

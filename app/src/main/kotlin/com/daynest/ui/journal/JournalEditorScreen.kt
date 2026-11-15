@@ -263,9 +263,9 @@ private fun PremiumMediaOption(
         modifier = Modifier.clickable(onClick = onClick)
     ) {
         androidx.compose.foundation.layout.Box(
-            modifier = Modifier.size(48.dp),
-            shape = com.daynest.ui.theme.full,
-            background = MaterialTheme.colorScheme.surfaceContainerLowest.copy(alpha = 0.5f),
+            modifier = Modifier
+                .size(48.dp)
+                .background(MaterialTheme.colorScheme.surfaceContainerLowest.copy(alpha = 0.5f), shape = com.daynest.ui.theme.full),
             contentAlignment = Alignment.Center
         ) {
             Icon(
